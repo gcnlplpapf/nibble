@@ -1,0 +1,96 @@
+[![GitHub Stars](https://img.shields.io/github/stars/backendsystems/nibble?style=social)](https://github.com/backendsystems/nibble)
+[![PPA](https://img.shields.io/badge/Ubuntu-PPA-E95420?logo=ubuntu&logoColor=white)](#install-apt)
+[![COPR](https://img.shields.io/badge/Fedora-COPR-51A2DA?logo=fedora&logoColor=white)](#install-dnf)
+[![AUR](https://img.shields.io/aur/version/nibble-bin)](#install-aur)
+[![brew](https://img.shields.io/badge/brew-tap-FBB040)](#install-brew)
+[![winget](https://img.shields.io/badge/winget-package-0078D4?logo=windows&logoColor=white)](#install-winget)
+[![npm](https://img.shields.io/npm/v/@backendsystems/nibble)](#install-npm)
+[![PyPI](https://img.shields.io/pypi/v/nibble-cli)](#install-pip)
+
+<div align="center">
+  <img src="assets/nibble.svg" alt="Nibble" width="200">
+</div>
+
+
+Nibble is a CLI tool for local network scanning that focuses on speed and ease of use.
+
+Select a network interface, and it scans your local subnet.  
+Lists hosts, hardware manufacturer, open ports and their services.
+
+[![Clickable interface with mouse support](click.gif)](click.gif)
+
+- ⚡ Lightning fast, scans using lightweight threads
+- 🔒 Safe, does not need admin access or special privileges 
+- 🥷 Stealthy, emits no network signals before a scan is started 
+- Clickable interface, use your mouse to navigate and scan 🖱️
+  - or navigate with `↑/↓/←/→`, `w/s/a/d` or `h/j/k/l`
+  - context aware help screens, hotkey: `?`
+- Docker networks and WSL support 📦
+  - instant docker network scans when a docker socket is detected
+  - can scan windows interfaces from inside wsl
+- Shows detected hardware makers: 📙
+  - Raspberry Pi, Ubiquiti, Apple and 40,000 other vendor ids
+  - Reads service banners on open ports (for example, ssh or nginx)
+- Colors matches your terminal theme automatically 🌈
+- Defaults to SSH, Telnet, HTTP, HTTPS, SMB, RDP, and more
+  - Can be set to a list of custom ports that are stored for future use
+  - Target mode for targeted network scans
+- [History mode](#history) for past scans lookup 📜
+- [Headless mode](#headless-mode) with JSON output for scripting and automation 🤖
+
+## History
+See past scans, the found hosts and re-scan all hosts ports. hotkey: `r`  
+History remembers your position between sessions, so jump right back in to your last viewed scan.
+
+![Nibble history](history.gif "Made with Bubble Tea VHS")
+
+## Easy Installation
+
+| Platform | Manager | Command |
+|---|---|---|
+| <a id="install-apt">
+  <img src="https://cdn.simpleicons.org/ubuntu/E95420" width="16" style="vertical-align:middle"> Ubuntu <br> *or* Mint, Pop!\_OS, Zorin, ... | apt | `sudo add-apt-repository ppa:backendsystems/ppa` <br> `sudo apt install nibble`
+| <a id="install-dnf">
+  <img src="https://cdn.simpleicons.org/fedora/51A2DA" width="16" style="vertical-align:middle"> Fedora <br> *or* RHEL, CentOS Stream, ... | dnf | `sudo dnf copr enable @backendsystems/nibble` <br> `sudo dnf install nibble`
+| <a id="install-aur">
+  <img src="https://cdn.simpleicons.org/archlinux/1793D1" width="16" style="vertical-align:middle"> Arch Linux | aur | `yay -S nibble-bin` |
+| <a id="install-brew"></a>
+  <img src="https://cdn.simpleicons.org/homebrew/FBB040" width="16" style="vertical-align:middle"> macOS | brew | `brew install backendsystems/tap/nibble`
+| <a id="install-winget"></a>
+  🪟 Windows | winget | `winget install backendsystems.nibble`
+| <a id="install-npm"></a>
+  <img src="https://cdn.simpleicons.org/npm/CB3837" width="16" style="vertical-align:middle"> Any | npm | `npm install -g @backendsystems/nibble` <br> *or* `npx @backendsystems/nibble`
+| <a id="install-pip">
+  <img src="https://cdn.simpleicons.org/python/3776AB" width="16" style="vertical-align:middle"> Any | pip | `pipx install nibble-cli`
+| <a id="install-go">
+  <img src="https://cdn.simpleicons.org/go/00ADD8" width="16" style="vertical-align:middle"> Any | go | `go install github.com/backendsystems/nibble@latest`
+
+Pre-built binaries for Linux, macOS and Windows (amd64/arm64) are available on the [Releases](https://github.com/backendsystems/nibble/releases) page.
+
+## Usage
+Run the CLI with the `nibble` command, select a network interface.  
+Interface icons:  `🔌`Ethernet, `📶`Wi-Fi, `📦`Container, `🔒`VPN.
+
+## Headless Mode
+Run scans without the TUI. Outputs JSON. Activated by the `-i` input flag.  
+Headless scans are not saved in history.
+
+`-i` scan target(s), comma-separated or a file ([example_input](internal/parameters/example_input.txt))  
+`-p` custom ports (e.g. `22,80,8000-8100` or `-` for all)  
+`-o` write output to file instead of stdout ([example_output](internal/parameters/example_output.json))
+
+```bash
+nibble -i 192.168.0.0/24
+nibble -i 192.168.1.223,10.0.0.12/32 -p - -o results.json
+nibble -i targets.txt -p 22,80,443,8000-8100
+```
+
+Exit codes: `0` success, `1` error, `2` invalid usage.
+
+## License
+
+This project is MIT licensed. See the [LICENSE](LICENSE) file for details.
+
+Note: The "nibble" name and branding assets are excluded from this license, see the separate [LICENSE](assets/LICENSE) for branding terms.
+
+Built with [Bubble Tea](https://github.com/charmbracelet/bubbletea)
