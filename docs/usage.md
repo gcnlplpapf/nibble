@@ -20,3 +20,4 @@ Notes and usage details for nibble.
 - add a note about the defaults
 - link the usage section
 - add a note about the defaults
+- link the usage section
